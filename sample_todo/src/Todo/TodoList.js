@@ -1,9 +1,20 @@
 import React from 'react'
 
 
-const TodoList = ({todos, change}) => {
+const TodoList = ({todos, change, type}) => {
 
-    const list = todos.map( ({tno, title, complete}) => {
+
+    const arr = todos.filter(obj => {
+        if(type === 'DONE'){
+            return obj.complete === true
+        }else if(type === 'TO DO'){
+            return obj.complete === false
+        }else{
+            return true
+        }
+    })
+
+    const list = arr.map( ({tno, title, complete}) => {
 
         const style = complete ? {textDecorationLine: 'line-through', textDecorationStyle: 'solid'} : {}
 
