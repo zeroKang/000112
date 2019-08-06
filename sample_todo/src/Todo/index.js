@@ -9,8 +9,24 @@ export default class Todo extends Component {
     constructor(){
         super()
         this.state = {
-            todos:[{tno:1 , title:'3시 미팅', complete: false}]
+            todos:[{tno:1 , title:'3시 미팅', complete: true}]
         }
+    }
+
+    checkChange = (tno) => {
+        console.log(tno)
+
+        const target = this.state.todos.filter(obj => obj.tno === tno)[0]
+        const index = this.state.todos.indexOf(target)
+
+        const tempArr = this.state.todos
+
+        tempArr[index] = Object.assign(target, {complete: !target.complete})
+
+        console.log(tempArr)
+
+        this.setState({todos:tempArr})
+
     }
 
     addTodo = (title) => {
@@ -24,8 +40,8 @@ export default class Todo extends Component {
     render() {
         return(
             <div>
-                <TodoInput add= {this.addTodo}></TodoInput>
-                <TodoList todos = {this.state.todos}></TodoList>
+                <TodoInput add= {this.addTodo} ></TodoInput>
+                <TodoList todos = {this.state.todos} change = {this.checkChange}></TodoList>
             </div>
         )
     }
