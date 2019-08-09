@@ -62,8 +62,8 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/typography",
-    name: "Typography",
+    path: "/todo",
+    name: "Todo",
     rtlName: "طباعة",
     icon: LibraryBooks,
     component: Typography,

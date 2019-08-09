@@ -1,17 +1,82 @@
-import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React, {Component} from 'react';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import { List } from '@material-ui/core';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import CommentIcon from '@material-ui/icons/Comment';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import TodoInput from './TodoInput';
+
+export default class Todo extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      text:'',
+      todos:[ 
+          {tno:1, title:'AAA'},
+          {tno:2, title:'BBB'},
+          {tno:3, title:'CCC'},
+        ]
+    }
+  }
 
 
-export default function SimpleContainer() {
+  render(){
+
+    const {text, todos} = this.state
+
+    const list = todos.map( ({tno, title}, idx) => {
+      return(
+          <ListItem key={tno} button>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={true}
+                tabIndex={-1}
+                disableRipple                
+              />
+              </ListItemIcon>
+              <ListItemText>
+              {title}
+              </ListItemText>
+            </ListItem>
+      )
+    })
+
+    
     return (
       <React.Fragment>
-        <CssBaseline />
-        <Container maxWidth="sm" style={{ backgroundColor: '#cfe8fc', height: '100vh' }}>
-          <TodoInput ></TodoInput>
-        </Container>
+        <div>
+
+          <Typography variant="h2" component="h2">
+            Todo List
+          </Typography>
+
+          <TextField
+              id="standard-required"
+              label="Title"
+              margin="normal"
+              value={text}
+              onChange = {(e) => this.setState({text:e.target.value})}
+          />
+          <Button variant="contained" color="primary">
+              ADD
+          </Button>          
+        </div>
+        <div>
+
+          <List>
+            {list}
+          </List>
+
+        </div>
       </React.Fragment>
     );
   }
+   
+}
