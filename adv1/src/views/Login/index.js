@@ -1,9 +1,18 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 
-export default function() {
+export default class Login extends Component {
 
-    return (
-        <h1>Login</h1>
-    )
+    constructor(props){
+        super(props)
+    }
+
+
+    render() {
+        return(
+            <div>
+                <button onClick={() => { this.props.fn({userid:'u00', username:'홍길동'}) }}>Login</button>
+            </div>
+        )
+    }
 }

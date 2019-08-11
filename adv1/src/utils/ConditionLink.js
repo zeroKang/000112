@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export function ConditionLink (props) {
+export default function ConditionLink (props) {
 
     const originalLink = props.children
     const condition = props.condition
