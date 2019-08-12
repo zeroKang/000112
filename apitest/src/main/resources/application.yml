@@ -7,3 +7,16 @@ spring:
     username: test_user1
 
 
+  jpa:
+    database: mysql
+    show-sql: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate: 
+      ddl-auto: update
+
+logging:
+  level:
+    org.springframework: info
+    
+

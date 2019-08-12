@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect  } from "react-router-dom";
 
 import Main from './views/Main'
 import Board from './views/Board'
 import Product from './views/Product'
 import Login from './views/Login'
+import MyPage from './views/MyPage'
 import ConditionLink from './utils/ConditionLink'
 import NotFound from './views/NotFound'
 import Map from './views/Map'
@@ -25,6 +26,10 @@ export default class App extends Component{
   }
 
   render() {
+
+    console.log("-------------------------------------")
+    console.log(this.state.user)
+
     return(
       <Router>
         <ul>
@@ -48,8 +53,13 @@ export default class App extends Component{
             <Link to="/mypage">MyPage</Link>
           </li>
           </ConditionLink>
+
           <li>
-            <Link to="/map">Map</Link>
+            <Link to="/mypage">Free Board</Link>
+          </li>
+
+          <li>
+            <Link to="/mypage">MyPage</Link>
           </li>
           
 
@@ -61,8 +71,16 @@ export default class App extends Component{
         <Route path="/product" component={Product}></Route>
         <Route path="/login" component={() => <Login fn= {this.loginProcess}></Login>}></Route>
         <Route path="/map" component={Map}></Route>
-        <Route component ={NotFound} ></Route>
         
+        <Route exact path="/mypage" render={() => (
+          this.state.user === null ? (
+            <Redirect to="/login"/>
+          ) : (
+            <MyPage/>
+          )
+        )}/>
+        
+        <Route component ={NotFound} ></Route>
         </Switch>
       </Router>
     )
