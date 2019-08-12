@@ -13,7 +13,8 @@ export default class  TodoList extends Component {
         this.state = {
             content:[], 
             page:props.match.params.page||1,
-            totalPages: 1
+            totalPages: 1,
+            isLoading: false,
         }
     }
 
@@ -23,17 +24,20 @@ export default class  TodoList extends Component {
 
     }
 
+    changePage (page){
+        this.setState({page:page, isLoading:true})
+        this.getAjaxData(page)
+    }
 
-    getAjaxData() {
 
-        const page = this.state.page
+    getAjaxData(page = 1) {
 
         console.log("get Ajax page........."+page)
 
         axios.get("http://localhost:8080/todo/pages/"+ page)
             .then(res => {
                 console.log(res.data)
-                this.setState(res.data)
+                this.setState( Object.assign({},res.data, {isLoading:false}))
             })
     }
 
@@ -48,23 +52,24 @@ export default class  TodoList extends Component {
         const linkArr = []
         for(let i = 1; i <= this.state.totalPages; i++){
             //linkArr.push(<span>&nbsp;&nbsp;&nbsp;<a href={`/todoList/${i}`}>{i}</a></span>)
-            linkArr.push(<Link to={`/todoList/${i}`} key={i}>&nbsp;&nbsp;&nbsp;{i}&nbsp;&nbsp;&nbsp;</Link>)
+            linkArr.push(<Link to={`/todoList/${i}`} key={i} onClick={() => this.changePage(i)} replace>&nbsp;&nbsp;&nbsp;{i}&nbsp;&nbsp;&nbsp;</Link>)
         }
 
 
         return(
             <div>
-            <h1>Page: {this.state.page}</h1>
-            <ul>
-                {list}
-            </ul>
-
-
-            <div>
-                {linkArr}
-            </div>
-
- 
+            <h1>Page: {this.props.match.params.page} {this.state.isLoading?"LOADIND":"FININSED"}</h1>
+            {this.state.isLoading == false ?
+                <div>
+                <ul>
+                    {list}
+                </ul>
+                <div>
+                    {linkArr}
+                </div>
+                </div>
+            : <h3>Loading............</h3>
+            }
 
             </div>
         )
