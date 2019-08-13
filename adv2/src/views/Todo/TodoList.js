@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import axios from 'axios'
-import { getDefaultWatermarks } from 'istanbul-lib-report';
 
 
 
@@ -19,8 +18,7 @@ export default class  TodoList extends Component {
     }
 
     componentDidMount(){
-
-        this.getAjaxData()
+        this.changePage(this.props.match.params.page||1)
 
     }
 
@@ -51,8 +49,7 @@ export default class  TodoList extends Component {
 
         const linkArr = []
         for(let i = 1; i <= this.state.totalPages; i++){
-            //linkArr.push(<span>&nbsp;&nbsp;&nbsp;<a href={`/todoList/${i}`}>{i}</a></span>)
-            linkArr.push(<Link to={`/todoList/${i}`} key={i} onClick={() => this.changePage(i)} replace>&nbsp;&nbsp;&nbsp;{i}&nbsp;&nbsp;&nbsp;</Link>)
+            linkArr.push(<Link to={`/todoList/${i}`} key={i} onClick={() => this.changePage(i)}><b>{i}</b></Link>)
         }
 
 
