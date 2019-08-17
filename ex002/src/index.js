@@ -7,14 +7,17 @@ import * as serviceWorker from './serviceWorker';
 
 import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
-
-import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers'
-import thunk from 'redux-thunk';
 
+import createSagaMiddleware from 'redux-saga';
 
+import mySaga from './middleware/todoSaga'
 
-const store = createStore(rootReducer,  composeWithDevTools(applyMiddleware(thunk)))
+const sagaMiddleware = createSagaMiddleware() 
+
+const store = createStore(rootReducer,   applyMiddleware(sagaMiddleware))
+
+sagaMiddleware.run(mySaga)
 
 ReactDOM.render(<Provider store = {store}><App/></Provider>, document.getElementById('root'));
 

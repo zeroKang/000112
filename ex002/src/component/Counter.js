@@ -13,9 +13,8 @@ function Counter(props) {
 
 const mapStateToProps = ({countReducer}) => {
 
-    console.log(countReducer)
-
     return {count:countReducer.count}
+
 }
 
 export default connect(mapStateToProps)(Counter)
