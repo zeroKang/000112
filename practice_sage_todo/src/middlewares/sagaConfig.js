@@ -1,6 +1,8 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
 
+import todo from './todoSaga'
+
 function getData() {
     
     return axios.get("http://localhost:8080/sample/hello")
@@ -19,7 +21,11 @@ function* fetchHello(action) {
 
 function* sageConfig(){
 
+    console.log(todo)
+
     yield takeEvery("REQUEST_FETCH", fetchHello)
+    yield takeEvery("REQUEST_TODO_ADD", todo.fetchAdd)
+    yield takeEvery("REQUEST_TODO_LIST", todo.fetchList)
 }
 
 export default sageConfig;

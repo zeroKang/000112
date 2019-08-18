@@ -8,9 +8,9 @@ function sampleReducer(state = {text:''} , action ) {
 
     let newState = state
 
-    if(type === 'FETCH_END'){
+    if(type === 'TODO_ADD_END'){
 
-        newState = {text: action.payload}
+        newState = Object.assign({}, state, {text:action.payload})
 
     }
     return newState
