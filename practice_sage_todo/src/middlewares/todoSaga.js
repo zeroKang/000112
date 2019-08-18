@@ -29,6 +29,7 @@ function* fetchAdd(action) {
 
     const text = yield call (addTodo,  {title:action.payload, complete:false})
     yield put({type:"TODO_ADD_END", payload: text})
+    yield put({type:"REQUEST_TODO_LIST", payload: 1})
 
 }
 

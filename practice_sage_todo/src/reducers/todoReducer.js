@@ -1,4 +1,13 @@
-function todoReducer(state = {text:'', arr:[]} , action ) {
+
+const initialState = {
+    text:'',
+    arr:[],
+    totalPages: 0,
+    page: 1
+}
+
+
+function todoReducer(state = initialState , action ) {
 
     console.log("todoReducer.........." , action)
 
@@ -11,9 +20,12 @@ function todoReducer(state = {text:'', arr:[]} , action ) {
         newState = Object.assign({}, state, {text:action.payload})
 
     }else if(type === 'TODO_LIST_END') {
+
         console.log("todoReducer.." , action)
 
-        newState = Object.assign({}, state, {arr:action.payload.content})
+        const {content, totalPages, number} = action.payload
+
+        newState = Object.assign({}, state, {arr:content, totalPages: totalPages, page: number + 1})
 
     }
     return newState
