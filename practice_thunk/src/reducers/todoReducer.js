@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 
-export const requestList = (dispatch, state) => {
+export const requestList = (dispatch, state, extra) => {
 
-    console.log("requestList............."  )
+    console.log("requestList............." , extra )
 
     dispatch({type:'REQUEST_LIST'})
 
@@ -11,6 +11,23 @@ export const requestList = (dispatch, state) => {
         dispatch({type:'END_LIST'})
     }, 3000)
 
+}
+
+
+
+export const requestPage = (page) => {
+
+    console.log("requestPage.............First")
+
+    return (dispatch) => {
+        console.log("requestPage........Second" )
+        
+        axios.get("http://localhost:8080/todo/pages/" + page)
+        .then(res => {
+            dispatch({type:'END_LIST', payload: res.data})
+        })
+
+    }
 }
 
 
@@ -26,7 +43,7 @@ function todoReducer( state = {arr:[], loaded:false} , action ) {
         
     }else if(action.type === 'END_LIST'){
 
-        newState = Object.assign({}, state, {loaded:true})
+        newState = Object.assign({}, state, {loaded:true}, {arr:action.payload.content})
     }
 
     return newState
